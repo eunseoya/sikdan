@@ -1,0 +1,19 @@
+{
+  "stores": [
+    {
+      "id": "006461a5-0d85-444b-b82d-fd7cd39b1198",
+      "store": "Weee",
+      "items": ["파", "고구마", "청경채", "잡곡밥", "어묵", "김치"]
+    },
+    {
+      "id": "25a3cf3e-066c-4ad3-9fde-6331f2fd49b4",
+      "store": "Costco",
+      "items": ["참치", "frozen fruit", "extra virgin olive oil"]
+    },
+    {
+      "id": "3c38e716-1544-4e93-9d14-cfcde4deb572",
+      "store": "Stop & Shop",
+      "items": ["양파", "감자", "당근", "초코칩"]
+    }
+  ]
+}
