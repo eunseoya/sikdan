@@ -1,7 +1,7 @@
 "use client";
 import { Plus, Trash2, Check, Loader2, X, Share } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
-import type { ShoppingList, ShoppingListItem } from "@/types/shopping-list";
+import type { ShoppingList, ShoppingListItem } from "@/types";
 import { onShare } from "@/hooks/utils";
 interface ShoppingListPanelProps {
   title: string;
@@ -108,18 +108,16 @@ export function ShoppingListPanel({
 
   return (
     <div id="all" className="p-4 space-y-4">
-        
-
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-        <h2 className="text-xl font-semibold">{title}</h2>
-        <button 
+          <h2 className="text-xl font-semibold">{title}</h2>
+          <button
             onClick={() => onShare("all")}
             className="flex items-center text-[#989898] hover:text-[#000000] transition-colors"
           >
             <Share size={20} />
           </button>
-          </div>
+        </div>
 
         <div className="flex items-center gap-2">
           {/* Save status indicator */}
@@ -148,11 +146,8 @@ export function ShoppingListPanel({
               className="flex items-center gap-1 px-3 py-1 text-sm text-blue-600 hover:bg-blue-50 rounded-md"
             >
               <Plus className="w-4 h-4" />새 마트
-              
             </button>
-            
           )}
-          
         </div>
       </div>
 
@@ -200,13 +195,13 @@ export function ShoppingListPanel({
           >
             <div className="flex justify-between items-center mb-3">
               <div className="flex items-center gap-2">
-              <h3 className="font-medium text-gray-800">{store.store}</h3>
-              <button 
-            onClick={() => onShare(store.store)}
-            className="flex items-center text-[#989898] hover:text-[#000000] transition-colors"
-          >
-            <Share size={18} />
-          </button>
+                <h3 className="font-medium text-gray-800">{store.store}</h3>
+                <button
+                  onClick={() => onShare(store.store)}
+                  className="flex items-center text-[#989898] hover:text-[#000000] transition-colors"
+                >
+                  <Share size={18} />
+                </button>
               </div>
               <button
                 onClick={() => removeStore(store.id)}

@@ -3,7 +3,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { CalendarHeader } from "@/components/calendar-header";
-import { MenuPanel } from "@/components/menu-panel";
 import { ShoppingListPanel } from "@/components/shopping-list-panel";
 import { WeeklySchedulePanel } from "@/components/weekly-schedule-panel";
 import { MonthlyCalendarPanel } from "@/components/monthly-calendar-panel";
@@ -11,6 +10,7 @@ import { SelectedItemPanel } from "@/components/selected-item-panel";
 import { StatsPanel } from "@/components/stats-panel";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import type { MenuItem, ScheduleItem, CalendarView } from "@/types";
+import { ShoppingList } from "@/types";
 import menuData from "@/data/menu.json";
 import {
   startOfWeek,
@@ -20,15 +20,14 @@ import {
   format,
 } from "date-fns";
 import { ko } from "date-fns/locale";
-import type { ShoppingList } from "@/types/shopping-list";
 
 interface CalendarAppProps {
-  initialDate?: string;
+  initialDate: string; // Make initialDate required to match page usage
   initialPanelIndex?: number;
 }
 
 export default function CalendarApp({
-  initialDate = "",
+  initialDate,
   initialPanelIndex = 1,
 }: CalendarAppProps) {
   const [activeView, setActiveView] = useState<CalendarView>("weekly");
@@ -69,8 +68,15 @@ export default function CalendarApp({
 
   // Initialize state from props
   useEffect(() => {
-    const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
-    setSelectedDate(initialDate || today);
+    const today = new Date().toISOString().split("T")[0];
+
+    // Handle both URL format (YYYY-MM-DD) and app format (MM/DD)
+    const formattedDate = initialDate.includes("-")
+      ? formatDateForUrl(initialDate)
+      : initialDate;
+
+    setSelectedDate(formattedDate || today);
+
     if (initialPanelIndex !== undefined) {
       setActivePanelIndex(initialPanelIndex);
     }
@@ -82,7 +88,6 @@ export default function CalendarApp({
 
   // Format date for URL: convert YYYY-MM-DD or MM/DD to a consistent format
   const formatDateForUrl = (date: string): string => {
-    const today = new Date();
     if (date.includes("/")) {
       return date; // Keep MM/DD format as is since it matches our data
     }
@@ -91,7 +96,9 @@ export default function CalendarApp({
     if (parts.length === 3) {
       return `${parseInt(parts[1])}/${parseInt(parts[2])}`;
     }
-    return `${today.getMonth() + 1}/${today.getDate()}`; // fallback to today
+    // Fallback to today
+    const today = new Date();
+    return `${today.getMonth() + 1}/${today.getDate()}`;
   };
 
   const goBackToCalendar = () => {
@@ -172,10 +179,12 @@ export default function CalendarApp({
   };
 
   // Calculate stats
+  // Calculate stats
   const stats = useMemo(() => {
     const dishStats: Map<string, number> = new Map();
 
-    menuData.forEach((item: MenuItem) => {
+    // Remove the incorrect MenuItem type annotation
+    menuData.forEach((item) => {
       // Count dishes across all meal types (lunch, dinner, dessert)
       const dishTypes = [
         { type: "lunch", dish: item.lunch?.mainDish },

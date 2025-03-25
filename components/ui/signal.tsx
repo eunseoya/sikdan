@@ -2,7 +2,7 @@
 
 import type { LightbulbIcon as LucideProps } from "lucide-react";
 
-export function Signal(props: LucideProps) {
+export function Signal(props: typeof LucideProps) {
   return (
     <svg
       width="16"

@@ -8,7 +8,10 @@ const getKoreanDayName = (date: Date): string => {
   return days[date.getDay()];
 };
 
-const getWeekDates = (scheduleItems: ScheduleItem[], currentWeek: Date): Date[] => {
+const getWeekDates = (
+  scheduleItems: ScheduleItem[],
+  currentWeek: Date,
+): Date[] => {
   // Always use the provided currentWeek
   const weekStart = new Date(currentWeek);
   return Array.from({ length: 7 }, (_, i) => {
@@ -32,7 +35,7 @@ export function WeeklySchedulePanel({
   return (
     <div id="share" className="p-4">
       <div className="relative">
-        <button 
+        <button
           onClick={() => onShare("share")}
           className="absolute right-4 top-0 flex items-center text-[#989898] hover:text-[#000000] transition-colors"
         >
@@ -52,12 +55,7 @@ export function WeeklySchedulePanel({
         <div className="flex flex-col">
           <div className="text-sm text-[#989898] mb-1">간식</div>
         </div>
-        
-
       </div>
-      
-     
-
 
       {getWeekDates(scheduleItems, currentWeek).map((date, index) => {
         const dateString = `${date.getMonth() + 1}/${date.getDate()}`;
@@ -68,15 +66,15 @@ export function WeeklySchedulePanel({
 
         return (
           <div
-        key={index}
-        className="grid grid-cols-4 gap-4 mt-4 cursor-pointer hover:bg-gray-50 rounded-md p-4"
-        onClick={() => onSelectDate(dateString)}
+            key={index}
+            className="grid grid-cols-4 gap-4 mt-4 cursor-pointer hover:bg-gray-50 rounded-md p-4"
+            onClick={() => onSelectDate(dateString)}
           >
-        <div className="flex">
-          <div className="text-2xl font-medium">{dayName}</div>
-          <div className="text-2xl text-[#989898] ml-2">{dateString}</div>
-        </div>
-        <div className="flex flex-col">
+            <div className="flex">
+              <div className="text-2xl font-medium">{dayName}</div>
+              <div className="text-2xl text-[#989898] ml-2">{dateString}</div>
+            </div>
+            <div className="flex flex-col">
               {scheduleItem ? (
                 <>
                   <div className="text-lg font-medium">

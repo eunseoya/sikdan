@@ -1,7 +1,6 @@
 import type React from "react";
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -9,7 +8,6 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "식단표",
   description: "Sikdan: A simple meal planner",
-  image: "/og-image.png",
 };
 
 export default function RootLayout({

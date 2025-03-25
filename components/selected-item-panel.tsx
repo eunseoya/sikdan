@@ -1,8 +1,9 @@
 "use client";
+import { ScheduleItem, EditModeState, EditValuesState } from "@/types";
 
 interface SelectedItemPanelProps {
   title: string;
-  menuItems: ScheduleItems[];
+  menuItems: ScheduleItem[];
   isActive: boolean;
   editMode: EditModeState;
   editValues: EditValuesState;

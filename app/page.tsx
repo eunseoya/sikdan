@@ -1,5 +1,5 @@
 import CalendarApp from "@/components/calendar-app";
 
 export default function Home() {
-  return <CalendarApp />;
+  return <CalendarApp {...{ initialDate: new Date().toISOString() }} />;
 }

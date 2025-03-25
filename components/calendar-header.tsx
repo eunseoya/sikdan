@@ -26,6 +26,8 @@ interface CalendarHeaderProps {
   onPlusClick?: () => void;
   selectedDate?: Date;
   onDateSelect?: (date: Date) => void;
+  currentWeek?: Date;
+  setCurrentWeek?: React.Dispatch<React.SetStateAction<Date>>;
 }
 
 export function CalendarHeader({
@@ -41,6 +43,8 @@ export function CalendarHeader({
   onPlusClick,
   selectedDate,
   onDateSelect,
+  currentWeek,
+  setCurrentWeek,
 }: CalendarHeaderProps) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const textColor = "text-gray-500";
