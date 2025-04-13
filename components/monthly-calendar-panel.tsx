@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 
 interface MonthlyCalendarPanelProps {
   year: number;
@@ -10,7 +11,7 @@ export function MonthlyCalendarPanel({
   onSelectDate,
 }: MonthlyCalendarPanelProps) {
   const months = generateMonthsData(year);
-
+  const [today] = useState(new Date());
   const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
 
   return (
@@ -32,10 +33,19 @@ export function MonthlyCalendarPanel({
               {Array.from({ length: 42 }, (_, i) => {
                 const dayOffset = month.startDay - 1;
                 const day = i - dayOffset + 1;
+                
+                // Check if this is the current date
+                const isCurrentDate = 
+                  year === today.getFullYear() && 
+                  monthIdx === today.getMonth() && 
+                  day === today.getDate();
+                
                 return day > 0 && day <= month.days ? (
                   <div
                     key={i}
-                    className="text-center py-1 cursor-pointer hover:bg-gray-100 rounded-full w-6 h-6 mx-auto flex items-center justify-center"
+                    className={`text-center py-1 cursor-pointer hover:bg-gray-100 rounded-full w-6 h-6 mx-auto flex items-center justify-center ${
+                      isCurrentDate ? 'bg-blue-500 text-white' : ''
+                    }`}
                     onClick={() => onSelectDate(`${monthIdx + 1}/${day}`)}
                   >
                     {day}
@@ -90,7 +100,5 @@ function generateMonthsData(year: number) {
     });
   }
 
-  // You can slice this array if you want to display fewer months
-  // e.g., return monthsData.slice(0, 3); for just first 3 months
   return monthsData;
 }
